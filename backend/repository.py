@@ -1,3 +1,4 @@
+# repository data access layer for Smart Omni-directional Concierge application
 import json
 import os
 import requests
@@ -8,8 +9,8 @@ GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
 GITHUB_URL = os.environ.get("GITHUB_URL")
 
 # Gistへデータを保存
-def save_to_gist(data, filename="db.json"):
-    url = f"{GITHUB_URL}/gists/{GIST_ID}"
+def save_data(data, filename="db.json"):
+    url = f"{GITHUB_URL}/{GIST_ID}"
     headers = {
         "Authorization": f"token {GITHUB_TOKEN}",
         "Accept": "application/vnd.github.v3+json"
@@ -26,7 +27,7 @@ def save_to_gist(data, filename="db.json"):
 
 # データ処理をカプセル化
 def fetch_data(filename="db.json"):
-    url = f"{GITHUB_URL}/gists/{GIST_ID}"
+    url = f"{GITHUB_URL}/{GIST_ID}"
     response = requests.get(url)
     if response.status_code == 200:
         gist_data = response.json()
