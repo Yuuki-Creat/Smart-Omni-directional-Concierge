@@ -23,3 +23,13 @@ def save_to_gist(data, filename="db.json"):
     }
     response = requests.patch(url, headers=headers, json=payload)
     return response.status_code == 200
+
+# データ処理をカプセル化
+def fetch_data(filename="db.json"):
+    url = f"{GITHUB_URL}/gists/{GIST_ID}"
+    response = requests.get(url)
+    if response.status_code == 200:
+        gist_data = response.json()
+        content = gist_data.get('files', {}).get(filename, {}).get('content', '{}')
+        return json.loads(content)
+    return {}
