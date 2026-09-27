@@ -5,6 +5,35 @@
 
         <!-- ticketId（受付番号）がない場合は入力フォームを表示 -->
         <form @submit.prevent="handleSubmit" v-if="!ticketId">
+            <!-- 1. 服の種類を選択 -->
+            <div class="form-group">
+                <label>お預かり品（主な種類） <span class="required">*</span></label>
+                <select v-model="form.clothing_type" class="form-control" required>
+                    <option value="" disabled>選択してください</option>
+                    <option value="スーツ上下">スーツ上下</option>
+                    <option value="ワイシャツ">ワイシャツ</option>
+                    <option value="コート・アウター">コート・アウター</option>
+                    <option value="ワンピース">ワンピース</option>
+                    <option value="その他">その他（一般衣類）</option>
+                </select>
+            </div>
+
+            <!-- 2. 点数（着数）を入力 -->
+            <div class="form-group">
+                <label>お預かり点数 <span class="required">*</span></label>
+                <div class="number-input-group">
+                    <input 
+                        type="number" 
+                        v-model.number="form.quantity" 
+                        class="form-control" 
+                        min="1" 
+                        max="50"
+                        required
+                    >
+                    <span class="unit">点</span>
+                </div>
+            </div>
+            <!-- 3. ご来店予定時間を選択 -->
             <div class="form-group">
                 <label>ご来店予定 </label>
                 <select v-model="form.visit_time" class="form-select">
@@ -47,6 +76,8 @@ import { submitIndividualCheckin } from '../../api/apiClient';
 
 // 入力データを入れる箱（リアクティブ＝画面と連動する変数）
 const form = reactive({
+    clothing_type: '',
+    quantity: 1,
     visit_time: '混雑',
 });
 
@@ -88,6 +119,8 @@ const handleSubmit = async () => {
 // 画面をリセットする関数（最初からやり直すボタン用）
 const resetForm = () => {
     ticketId.value = '';
+    form.clothing_type = '';
+    form.quantity = 1;
     form.visit_time = '混雑';
     errorMessage.value = '';
 };
@@ -111,7 +144,7 @@ const resetForm = () => {
 
 .btn-submit {
     width: 100%; padding: 12px;
-    background-color: #5ba77a; /* メイングリーン */
+    background-color: #5ba77a;
     color: white; border: none; border-radius: 6px;
     font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s;
 }
