@@ -3,7 +3,7 @@
     <div class="card">
         <h2>【個人のお客様】事前カルテ発行</h2>
         <form @submit.prevent="handleSubmit" v-if="!ticketId">
-            <label>ご来店予定</label>
+            <label>ご来店予定 </label>
             <select v-model="form.visit_time">
                 <option value="混雑">通常（土日・夕方）</option>
                 <option value="オフピーク">平日 13:00~15:00（500pt還元）</option>

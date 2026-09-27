@@ -23,3 +23,7 @@ rad.json
 TestResults.xml
 #venv
 *.venv
+#vscode
+*.vscode/
+#node_modules
+node_modules/

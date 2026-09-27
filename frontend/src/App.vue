@@ -2,7 +2,7 @@
 <template>
   <div id="app-container">
     <header class="app-header">
-      <h1>Smart Omni-Concierge</h1>
+      <h1>Smart-Omni-directional-Concierge</h1>
       <p class="subtitle">〜 お客様の感動と、業務平準化のハイブリッド基盤 〜</p>
       
       <!-- ロール（役割）切り替え用のナビゲーション -->

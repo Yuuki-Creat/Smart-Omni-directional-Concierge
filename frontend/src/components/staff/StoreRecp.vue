@@ -4,7 +4,7 @@
         <h2>【店舗スタッフ】スマート受付</h2>
         <form @submit.prevent="handleReception">
             <input v-model="ticketId" placeholder="QRデータ（例：IND-123456）" required>
-            <button type="submit">受付完了</button>
+            <button type="submit"> 受付完了</button>
         </form>
         <p v-if="message" class="result-msg">{{ message }}</p>
     </div>
