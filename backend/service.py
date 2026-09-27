@@ -27,26 +27,40 @@ def process_individual_checkin(req_data):
 
 # 法人向け(B2B)処理
 def get_corporate_status(corp_id):
-    # モックデータ(実際はrepository経由で取得を想定)
+    db = fetch_data()
+    corporates = db.get("corporates", [])
+
+    for corp in corporates:
+        if corp.get("corp_id") == corp_id:
+            return corp
+
     return {
         "corp_id": corp_id, 
-        "uniforms_in_factory": 120, 
-        "next_delivery_date": "2026-10-31"
+        "uniforms_in_factory": 0, 
+        "next_delivery_date": "未定"
     }
 
 # 工場向け(factory)処理
 def calculate_factory_schedule():
-    # 法人(ベースロード)と個人を組み合わせて返却
-    base_load = 150
     db = fetch_data()
+    corporates = db.get("corporates", [])
+    base_load = sum(corp.get("uniforms_in_factory", 0) for corp in corporates)
     individuals = db.get("individuals", [])
     b2c_pending = len(individuals)
+
+    max_capacity = 200  # 工場の最大処理能力(仮)
+
+    available_slots = max_capacity - base_load
     
+    if available_slots - b2c_pending < 20: # 空き枠から現在待機中の個人案件を引いた残りが少ない場合（ここでは20未満と仮定）
+        status = "warning"
+    else:
+        status = "stable"
     return {
         "base_load": base_load, 
          "b2c_pending": b2c_pending, 
-         "available_slots": 200 - base_load, 
-         "status": "stable"
+         "available_slots": available_slots if available_slots > 0 else 0,
+         "status": status
     }
 
 # 店舗向け(store)処理
