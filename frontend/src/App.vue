@@ -47,6 +47,7 @@ const views = {
 
 // 初期表示の画面を設定（デモ時はここを切り替えて見せます）
 const currentView = ref('individual')
+
 </script>
 
 <style scoped>
