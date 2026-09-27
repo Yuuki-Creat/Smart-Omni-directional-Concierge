@@ -32,5 +32,13 @@ def fetch_data(filename="db.json"):
     if response.status_code == 200:
         gist_data = response.json()
         content = gist_data.get('files', {}).get(filename, {}).get('content', '{}')
-        return json.loads(content)
-    return {}
+        try:
+            return json.loads(content)
+        except json.JSONDecodeError:
+            pass
+
+    return {
+        "individuals": [],
+        "corporates": [],
+        "factory_status": {}
+    }
