@@ -35,7 +35,7 @@
                     <span class="qr-text">{{ ticketId }}</span>
                 </div>
             </div>
-
+            <p></p>
             <button @click="resetForm" class="btn-secondary">最初に戻る</button>
         </div>
     </div>
