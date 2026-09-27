@@ -60,99 +60,35 @@ onMounted(loadStatus);
 
 <style scoped>
 .corporate-card {
-    background: #ffffff;
-    border-radius: 12px;
-    padding: 24px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    background: #ffffff; border-radius: 12px; padding: 24px;
+    box-shadow: 0 4px 15px rgba(91, 167, 122, 0.08);
 }
-
 .corp-id-label {
-    color: #666;
-    font-size: 14px;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 10px;
+    color: #666; font-size: 14px; margin-bottom: 20px;
+    border-bottom: 1px solid #e0e8e3; padding-bottom: 10px;
 }
+.loading-state { text-align: center; padding: 30px 0; color: #5ba77a; font-weight: bold; }
+.error-msg { background-color: #f8d7da; color: #721c24; padding: 12px; border-radius: 8px; margin-bottom: 20px; text-align: center; }
 
-.loading-state {
-    text-align: center;
-    padding: 30px 0;
-    color: #007bff;
-    font-weight: bold;
-}
-
-.error-msg {
-    background-color: #f8d7da;
-    color: #721c24;
-    padding: 12px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-.status-dashboard {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-bottom: 24px;
-}
-
+.status-dashboard { display: flex; flex-direction: column; gap: 15px; margin-bottom: 24px; }
 .status-box {
-    background: #f8f9fa;
-    border-left: 5px solid #6c757d;
-    padding: 20px;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
+    background: #f8f9fa; border-left: 5px solid #a4b3a9;
+    padding: 20px; border-radius: 8px; display: flex; flex-direction: column;
 }
-
 .status-box.highlight {
-    border-left-color: #007bff;
-    background: #eef6fc;
+    border-left-color: #5ba77a;
+    background: #eaf5ee;
 }
-
-.box-title {
-    font-size: 14px;
-    color: #555;
-    margin-bottom: 8px;
-    font-weight: bold;
-}
-
-.box-value {
-    font-size: 32px;
-    font-weight: bold;
-    color: #222;
-}
-
-.box-value small {
-    font-size: 16px;
-    color: #666;
-    margin-left: 4px;
-}
-
-.box-value.date {
-    font-size: 24px;
-    color: #007bff;
-}
+.box-title { font-size: 14px; color: #555; margin-bottom: 8px; font-weight: bold; }
+.box-value { font-size: 32px; font-weight: bold; color: #222; }
+.box-value small { font-size: 16px; color: #666; margin-left: 4px; }
+.box-value.date { color: #5ba77a; }
 
 .btn-refresh {
-    width: 100%;
-    padding: 12px;
-    background-color: #f8f9fa;
-    color: #333;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.2s;
+    width: 100%; padding: 12px; background-color: #f4f8f5; color: #333;
+    border: 1px solid #c9d8ce; border-radius: 8px; font-weight: bold;
+    cursor: pointer; transition: all 0.2s;
 }
-
-.btn-refresh:hover:not(:disabled) {
-    background-color: #e2e6ea;
-}
-
-.btn-refresh:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-}
+.btn-refresh:hover:not(:disabled) { background-color: #e0eee4; }
+.btn-refresh:disabled { opacity: 0.6; cursor: not-allowed; }
 </style>

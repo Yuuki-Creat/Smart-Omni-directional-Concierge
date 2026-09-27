@@ -1,6 +1,6 @@
 <!-- Individual Check-in UI -->
 <template>
-    <div class="card">
+    <div class="card individual-card">
         <h2>【個人のお客様】事前カルテ発行</h2>
 
         <!-- ticketId（受付番号）がない場合は入力フォームを表示 -->
@@ -94,85 +94,49 @@ const resetForm = () => {
 </script>
 
 <style scoped>
-/* 画面をリッチに見せるためのCSS装飾 */
-.form-group {
-    margin-bottom: 20px;
-    text-align: left;
+.individual-card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(91, 167, 122, 0.08); /* 影も緑寄り */
+    padding: 24px;
 }
 
+.form-group { margin-bottom: 20px; text-align: left; }
 .form-select {
-    width: 100%;
-    padding: 10px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    font-size: 16px;
-    margin-top: 8px;
+    width: 100%; padding: 10px; border-radius: 6px;
+    border: 1px solid #c9d8ce; font-size: 16px; margin-top: 8px;
+    outline: none;
 }
+.form-select:focus { border-color: #5ba77a; }
 
 .btn-submit {
-    width: 100%;
-    padding: 12px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
+    width: 100%; padding: 12px;
+    background-color: #5ba77a; /* メイングリーン */
+    color: white; border: none; border-radius: 6px;
+    font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s;
 }
-
-.btn-submit:disabled {
-    background-color: #999;
-    cursor: not-allowed;
-}
+.btn-submit:hover:not(:disabled) { background-color: #4a8e65; }
+.btn-submit:disabled { background-color: #a8d1b8; cursor: not-allowed; }
 
 .error-msg {
-    color: #d9534f;
-    background-color: #f2dede;
-    padding: 10px;
-    border-radius: 4px;
-    margin-bottom: 15px;
-    font-size: 14px;
+    color: #d9534f; background-color: #f2dede;
+    padding: 10px; border-radius: 4px; margin-bottom: 15px; font-size: 14px;
 }
 
-.success-box {
-    text-align: center;
-    padding: 20px 0;
-}
-
+.success-box { text-align: center; padding: 20px 0; }
 .qr-mock-container {
-    background: #f9f9f9;
-    padding: 20px;
-    border-radius: 12px;
-    display: inline-block;
-    margin: 20px 0;
-    border: 2px dashed #ccc;
+    background: #eaf5ee;
+    padding: 20px; border-radius: 12px; display: inline-block;
+    margin: 20px 0; border: 2px dashed #5ba77a;
 }
-
 .qr-mock {
-    width: 150px;
-    height: 150px;
-    background: #fff;
-    border: 8px solid #333;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 150px; height: 150px; background: #fff;
+    border: 8px solid #2c4234; display: flex; align-items: center; justify-content: center;
 }
-
-.qr-text {
-    font-weight: bold;
-    font-size: 18px;
-    color: #333;
-    word-break: break-all;
-}
+.qr-text { font-weight: bold; font-size: 18px; color: #333; word-break: break-all; }
 
 .btn-secondary {
-    padding: 8px 16px;
-    background-color: #6c757d;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+    padding: 8px 16px; background-color: #8fa898; color: white;
+    border: none; border-radius: 4px; cursor: pointer;
 }
 </style>

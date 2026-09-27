@@ -47,14 +47,19 @@ const views = {
 
 // 初期表示の画面を設定（デモ時はここを切り替えて見せます）
 const currentView = ref('individual')
-
 </script>
 
 <style scoped>
-/* 全体のベースデザイン（プレゼンで見栄えが良いようにクリーンな設計） */
+/* 画面全体の背景を薄緑に設定 */
+:global(body) {
+  margin: 0;
+  background-color: #f2f7f4;
+}
+
 #app-container {
   max-width: 800px;
   margin: 0 auto;
+  padding-top: 20px;
   font-family: 'Helvetica Neue', Arial, sans-serif;
   color: #333;
 }
@@ -62,23 +67,22 @@ const currentView = ref('individual')
 .app-header {
   text-align: center;
   padding: 20px 0;
-  border-bottom: 2px solid #eee;
+  border-bottom: 2px solid #e0e8e3;
   margin-bottom: 30px;
 }
 
 .app-header h1 {
   margin: 0;
-  color: #2c3e50;
+  color: #2c4234;
   font-size: 24px;
 }
 
 .subtitle {
-  color: #666;
+  color: #66786d;
   font-size: 14px;
   margin-top: 5px;
 }
 
-/* ロール切り替えタブのデザイン */
 .role-nav {
   display: flex;
   justify-content: center;
@@ -90,7 +94,7 @@ const currentView = ref('individual')
 .role-nav button {
   padding: 10px 15px;
   border: 1px solid #ccc;
-  background-color: #f9f9f9;
+  background-color: #ffffff;
   border-radius: 8px;
   cursor: pointer;
   font-weight: bold;
@@ -99,18 +103,18 @@ const currentView = ref('individual')
 }
 
 .role-nav button:hover {
-  background-color: #e9ecef;
+  background-color: #eaf5ee;
 }
 
-/* 選択中のタブの色 */
 .role-nav button.active {
-  background-color: #007bff;
+  background-color: #5ba77a;
   color: white;
-  border-color: #007bff;
-  box-shadow: 0 4px 6px rgba(0, 123, 255, 0.2);
+  border-color: #5ba77a;
+  box-shadow: 0 4px 6px rgba(91, 167, 122, 0.2);
 }
 
 .app-main {
   padding: 0 20px;
+  padding-bottom: 40px;
 }
 </style>

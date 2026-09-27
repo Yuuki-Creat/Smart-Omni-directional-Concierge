@@ -63,70 +63,28 @@ const handleReception = async () => {
 
 <style scoped>
 .store-card {
-    background: #ffffff;
-    border-radius: 12px;
-    padding: 24px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    background: #ffffff; border-radius: 12px; padding: 24px;
+    box-shadow: 0 4px 15px rgba(91, 167, 122, 0.08);
 }
+.description { color: #66786d; margin-bottom: 20px; font-size: 14px; }
 
-.description {
-    color: #666;
-    margin-bottom: 20px;
-    font-size: 14px;
-}
-
-.input-group {
-    display: flex;
-    gap: 10px;
-}
-
+.input-group { display: flex; gap: 10px; }
 .form-input {
-    flex: 1;
-    padding: 12px;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    font-size: 16px;
-    outline: none;
-    transition: border-color 0.2s;
+    flex: 1; padding: 12px; border: 2px solid #c9d8ce;
+    border-radius: 8px; font-size: 16px; outline: none; transition: border-color 0.2s;
 }
-
 .form-input:focus {
-    border-color: #007bff;
+    border-color: #5ba77a;
 }
 
 .btn-submit {
-    padding: 0 24px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-    white-space: nowrap;
+    padding: 0 24px; background-color: #5ba77a; color: white;
+    border: none; border-radius: 8px; font-weight: bold; cursor: pointer; white-space: nowrap;
 }
+.btn-submit:hover:not(:disabled) { background-color: #4a8e65; }
+.btn-submit:disabled { background-color: #a8d1b8; cursor: not-allowed; }
 
-.btn-submit:disabled {
-    background-color: #a5d8ad;
-    cursor: not-allowed;
-}
-
-.result-msg {
-    margin-top: 20px;
-    padding: 12px;
-    border-radius: 8px;
-    text-align: center;
-    font-weight: bold;
-}
-
-.result-msg.success {
-    background-color: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
-}
-
-.result-msg.error {
-    background-color: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
-}
+.result-msg { margin-top: 20px; padding: 12px; border-radius: 8px; text-align: center; font-weight: bold; }
+.result-msg.success { background-color: #eaf5ee; color: #2c4234; border: 1px solid #c9d8ce; }
+.result-msg.error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
 </style>
