@@ -1,5 +1,6 @@
 # repository data access layer for Smart Omni-directional Concierge application
 import json
+import logging
 import os
 import requests
 
@@ -28,17 +29,21 @@ def save_data(data, filename="db.json"):
 # データ処理をカプセル化
 def fetch_data(filename="db.json"):
     url = f"{GITHUB_URL}/{GIST_ID}"
-    response = requests.get(url)
-    if response.status_code == 200:
+    headers = {
+        "Authorization": f"token {GITHUB_TOKEN}",
+        "Accept": "application/vnd.github.v3+json"
+    }
+    try:
+        response = requests.get(url, headers=headers)
+        response.raise_for_status()
         gist_data = response.json()
         content = gist_data.get('files', {}).get(filename, {}).get('content', '{}')
-        try:
-            return json.loads(content)
-        except json.JSONDecodeError:
-            pass
+        return json.loads(content)
+    except (requests.RequestException, json.JSONDecodeError) as e:
+            logging.info(f"Error fetching data: {e}")
 
-    return {
-        "individuals": [],
-        "corporates": [],
-        "factory_status": {}
-    }
+            return {
+                "individuals": [],
+                "corporates": [],
+                "factory_status": {}
+            }
