@@ -18,7 +18,8 @@
         <div v-else-if="schedule" class="dashboard-content">
             <div class="Overview">
                 <h3 class="overview-title">本日の稼働状況</h3>
-                <span class="stat-value">{{ schedule.status }}</span>
+                <span class="stat-value">{{ schedule.status === 'stable' ? '安定' : '警告' }}</span>
+                <p></p>
             </div>
             <div class="stats-grid">
                 <div class="stat-box primary">
