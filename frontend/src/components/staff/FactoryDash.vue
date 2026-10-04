@@ -76,6 +76,7 @@ const loadSchedule = async () => {
         const res = await fetchFactorySchedule();
         if (res && res.data) {
             schedule.value = res.data;
+            console.log("スケジュールデータ:", schedule.value);
         } else {
             schedule.value = res;
         }
