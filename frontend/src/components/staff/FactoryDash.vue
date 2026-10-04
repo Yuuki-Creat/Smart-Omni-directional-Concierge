@@ -16,6 +16,10 @@
 
         <!-- データ表示 -->
         <div v-else-if="schedule" class="dashboard-content">
+            <div class="Overview">
+                <h3 class="overview-title">本日の稼働状況</h3>
+                <span class="stat-value">{{ schedule.status }}</span>
+            </div>
             <div class="stats-grid">
                 <div class="stat-box primary">
                     <span class="stat-label">B2B 固定需要</span>

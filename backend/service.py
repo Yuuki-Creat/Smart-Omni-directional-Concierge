@@ -89,10 +89,10 @@ def calculate_factory_schedule():
 
     return {
         "base_load": total_b2b, 
-         "b2c_pending": b2c_pending, 
-         "available_slots": available_slots if available_slots > 0 else 0,
-         "status": status,
-         "hourly_schedule": schedule
+        "b2c_pending": b2c_pending, 
+        "available_slots": available_slots if available_slots > 0 else 0,
+        "status": status,
+        "hourly_schedule": schedule
     }
 
 # 店舗向け(store)処理
