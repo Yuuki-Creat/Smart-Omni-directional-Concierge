@@ -63,8 +63,21 @@ const handleReception = async () => {
 
 <style scoped>
 .store-card {
-    background: #ffffff; border-radius: 12px; padding: 24px;
-    box-shadow: 0 4px 15px rgba(91, 167, 122, 0.08);
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 24px;
+    border: 12px solid #173f4e;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.store-card h2 {
+    font-size: 18px;
+    color: #173f4e;
+    margin-bottom: 20px;
+    border-bottom: 2px dotted #008992;
+    padding-bottom: 10px;
+    display: inline-block;
 }
 .description { color: #66786d; margin-bottom: 20px; font-size: 14px; }
 
@@ -78,11 +91,20 @@ const handleReception = async () => {
 }
 
 .btn-submit {
-    padding: 0 24px; background-color: #5ba77a; color: white;
-    border: none; border-radius: 8px; font-weight: bold; cursor: pointer; white-space: nowrap;
+    width: 100%; 
+    padding: 0 24px;
+    margin-top: 10px;
+    background-color: #008992;
+    color: white; 
+    border: none; 
+    border-radius: 8px;
+    font-size: 16px; 
+    font-weight: bold; 
+    cursor: pointer; 
+    transition: background-color 0.3s;
 }
-.btn-submit:hover:not(:disabled) { background-color: #4a8e65; }
-.btn-submit:disabled { background-color: #a8d1b8; cursor: not-allowed; }
+.btn-submit:hover:not(:disabled) { background-color: #006f77; }
+.btn-submit:disabled { opacity: 0.7; cursor: not-allowed; }
 
 .result-msg { margin-top: 20px; padding: 12px; border-radius: 8px; text-align: center; font-weight: bold; }
 .result-msg.success { background-color: #eaf5ee; color: #2c4234; border: 1px solid #c9d8ce; }
