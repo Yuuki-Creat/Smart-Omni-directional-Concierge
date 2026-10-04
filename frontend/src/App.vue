@@ -37,7 +37,7 @@ import StoreRecp from './components/staff/StoreRecp.vue'
 import FactoryDash from './components/staff/FactoryDash.vue'
 
 // 画面（ビュー）の定義とラベル付け
-// ※markRawを使うことで、Vueの監視オーバーヘッドを減らしパフォーマンスを上げます
+// ※markRawを使うことで、Vueの監視オーバーヘッドを減らしパフォーマンスを向上
 const views = {
   individual: { label: '👤 個人のお客様 (B2C)', component: markRaw(IndividualUI) },
   corporate:  { label: '🏢 法人のお客様 (B2B)', component: markRaw(CorporateUI) },
@@ -45,76 +45,52 @@ const views = {
   factory:    { label: '🏭 工場稼働ダッシュボード', component: markRaw(FactoryDash) }
 }
 
-// 初期表示の画面を設定（デモ時はここを切り替えて見せます）
+// 初期表示の画面を設定
 const currentView = ref('individual')
 </script>
 
-<style scoped>
-/* 画面全体の背景を薄緑に設定 */
-:global(body) {
+<style>
+/* 共通ベースデザイン */
+body {
+  background-color: #f7f9fc;
+  color: #4a4a4a;
+  font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
   margin: 0;
-  background-color: #f2f7f4;
+  padding: 0;
 }
-
-#app-container {
-  max-width: 800px;
+/* 共通カードデザイン */
+.card {
+  background: white;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+  max-width: 500px;
   margin: 0 auto;
-  padding-top: 20px;
-  font-family: 'Helvetica Neue', Arial, sans-serif;
-  color: #333;
 }
+</style>
 
-.app-header {
-  text-align: center;
-  padding: 20px 0;
-  border-bottom: 2px solid #e0e8e3;
-  margin-bottom: 30px;
-}
+<style scoped>
+#app-container { max-width: 800px; margin: 0 auto; padding: 20px 0; }
+.app-header { text-align: center; margin-bottom: 30px; }
+.app-header h1 { color: #2c3e50; font-size: 26px; margin: 0 0 8px 0; }
+.subtitle { color: #7f8c8d; font-size: 15px; margin: 0; }
 
-.app-header h1 {
-  margin: 0;
-  color: #2c4234;
-  font-size: 24px;
-}
-
-.subtitle {
-  color: #66786d;
-  font-size: 14px;
-  margin-top: 5px;
-}
-
-.role-nav {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 20px;
-  flex-wrap: wrap;
-}
-
+.role-nav { display: flex; justify-content: center; gap: 12px; margin-top: 25px; flex-wrap: wrap; }
 .role-nav button {
-  padding: 10px 15px;
-  border: 1px solid #ccc;
-  background-color: #ffffff;
-  border-radius: 8px;
+  padding: 12px 20px;
+  border: none;
+  background-color: #edf2f7;
+  border-radius: 30px;
   cursor: pointer;
-  font-weight: bold;
-  color: #555;
-  transition: all 0.2s ease;
+  font-weight: 600;
+  color: #718096;
+  font-size: 14px;
+  transition: all 0.3s ease;
 }
-
-.role-nav button:hover {
-  background-color: #eaf5ee;
-}
-
+.role-nav button:hover { background-color: #e2e8f0; transform: translateY(-1px); }
 .role-nav button.active {
-  background-color: #5ba77a;
+  background-color: #4a90e2;
   color: white;
-  border-color: #5ba77a;
-  box-shadow: 0 4px 6px rgba(91, 167, 122, 0.2);
-}
-
-.app-main {
-  padding: 0 20px;
-  padding-bottom: 40px;
+  box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
 }
 </style>

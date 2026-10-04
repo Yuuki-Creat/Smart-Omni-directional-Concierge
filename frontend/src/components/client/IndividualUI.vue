@@ -1,10 +1,10 @@
 <!-- Individual Check-in UI -->
 <template>
     <div class="card individual-card">
-        <h2>【個人のお客様】事前カルテ発行</h2>
-
+        <h2>顧客：事前カルテの作成 📝</h2>
+        <p class="desc">気になる箇所を教えてください。</p>
         <!-- ticketId（受付番号）がない場合は入力フォームを表示 -->
-        <form @submit.prevent="handleSubmit" v-if="!ticketId">
+        <form @submit.prevent="handleSubmit" v-if="!ticketId" class="calte-form">
             <!-- 1. 服の種類を選択 -->
             <div class="form-group">
                 <label>お預かり品（主な種類） <span class="required">*</span></label>
@@ -18,14 +18,20 @@
                 </select>
             </div>
 
-            <!-- 2. 点数（着数）を入力 -->
+            <!-- 2. 要望 -->
             <div class="form-group">
-                <label>お預かり点数 <span class="required">*</span></label>
+                <label>気になる箇所（任意）</label>
+                <input type="text" v-model="form.requests" placeholder="例：襟の汚れ、袖のシミなど" class="form-input">
+            </div>
+
+            <!-- 3. 点数（着数）を入力 -->
+            <div class="form-group">
+                <label>お預かり点数</label>
                 <div class="number-input-group">
                     <input 
                         type="number" 
                         v-model.number="form.quantity" 
-                        class="form-control" 
+                        class="form-input short-input" 
                         min="1" 
                         max="50"
                         required
@@ -33,7 +39,7 @@
                     <span class="unit">点</span>
                 </div>
             </div>
-            <!-- 3. ご来店予定時間を選択 -->
+            <!-- 4. ご来店予定時間を選択 -->
             <div class="form-group">
                 <label>ご来店予定 </label>
                 <select v-model="form.visit_time" class="form-select">
@@ -77,8 +83,9 @@ import { submitIndividualCheckin } from '../../api/apiClient';
 // 入力データを入れる箱（リアクティブ＝画面と連動する変数）
 const form = reactive({
     clothing_type: '',
+    requests: '',
     quantity: 1,
-    visit_time: '混雑',
+    visit_time: 'オフピーク',
 });
 
 const loading = ref(false); // 通信中かどうかを判定するフラグ
@@ -93,21 +100,17 @@ const handleSubmit = async () => {
         // API（バックエンド）と通信
         const res = await submitIndividualCheckin(form);
 
-        // 【デバッグ用】F12キーの開発者ツール（コンソール）で、実際のデータの中身を確認できます
-        // console.log("バックエンドからのレスポンス:", res);
-
         // 例: res.ticket_id や res.data.ticket_id にデータが入っているかチェック
         const receivedTicketId = res.ticket_id || (res.data && res.data.ticket_id);
 
         if (receivedTicketId) {
-            ticketId.value = receivedTicketId; // 番号をセット（これで画面が切り替わる）
+            ticketId.value = receivedTicketId; // 成功画面に切り替え
         } else {
-            // 受付番号が空っぽだった場合は意図的なエラーを起こす
+            // 受付番号が空っぽだった場合はエラーを表示
             throw new Error("受付番号が取得できませんでした。");
         }
 
     } catch (error) {
-        // try { ... } の中でエラーが起きたらここにジャンプする
         console.error("通信エラー:", error);
         errorMessage.value = "発行に失敗しました。サーバーの状況を確認してください。";
     } finally {
@@ -120,8 +123,9 @@ const handleSubmit = async () => {
 const resetForm = () => {
     ticketId.value = '';
     form.clothing_type = '';
+    form.requests = '';
     form.quantity = 1;
-    form.visit_time = '混雑';
+    form.visit_time = 'オフピーク';
     errorMessage.value = '';
 };
 </script>
@@ -129,47 +133,100 @@ const resetForm = () => {
 <style scoped>
 .individual-card {
     background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(91, 167, 122, 0.08); /* 影も緑寄り */
-    padding: 24px;
+    border-radius: 24px;
+    padding: 30px;
+    border: 12px solid #173f4e;
+    max-width: 400px;
+    margin: 0 auto;
 }
 
-.form-group { margin-bottom: 20px; text-align: left; }
-.form-select {
-    width: 100%; padding: 10px; border-radius: 6px;
-    border: 1px solid #c9d8ce; font-size: 16px; margin-top: 8px;
-    outline: none;
+.individual-card h2 {
+    font-size: 18px;
+    color: #173f4e;
+    margin-bottom: 20px;
+    border-bottom: 2px dotted #008992;
+    padding-bottom: 10px;
+    display: inline-block;
 }
-.form-select:focus { border-color: #5ba77a; }
+
+.karte-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* 項目間の余白 */
+}
+
+.form-group { text-align: left; }
+.form-group label { 
+    display: block; 
+    font-size: 12px; 
+    color: #555; 
+    margin-bottom: 6px; 
+}
+
+.form-input {
+    width: 100%; 
+    padding: 14px; 
+    border-radius: 8px;
+    border: none; 
+    background-color: #f4f7f6; 
+    font-size: 14px; 
+    color: #333; 
+    outline: none; 
+    box-sizing: border-box;
+}
+.form-input:focus {
+    box-shadow: 0 0 0 2px #008992;
+}
+
+.number-input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.short-input {
+    width: 80px;
+}
+.unit {
+    font-size: 14px;
+    color: #333;
+}
 
 .btn-submit {
-    width: 100%; padding: 12px;
-    background-color: #5ba77a;
-    color: white; border: none; border-radius: 6px;
-    font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s;
+    width: 100%; 
+    padding: 16px;
+    margin-top: 10px;
+    background-color: #008992;
+    color: white; 
+    border: none; 
+    border-radius: 8px;
+    font-size: 16px; 
+    font-weight: bold; 
+    cursor: pointer; 
+    transition: background-color 0.3s;
 }
-.btn-submit:hover:not(:disabled) { background-color: #4a8e65; }
-.btn-submit:disabled { background-color: #a8d1b8; cursor: not-allowed; }
+.btn-submit:hover:not(:disabled) { background-color: #006f77; }
+.btn-submit:disabled { opacity: 0.7; cursor: not-allowed; }
 
 .error-msg {
     color: #d9534f; background-color: #f2dede;
-    padding: 10px; border-radius: 4px; margin-bottom: 15px; font-size: 14px;
+    padding: 10px; border-radius: 4px; font-size: 14px;
 }
 
+/* 成功画面 */
 .success-box { text-align: center; padding: 20px 0; }
 .qr-mock-container {
-    background: #eaf5ee;
+    background: #f4f7f6;
     padding: 20px; border-radius: 12px; display: inline-block;
-    margin: 20px 0; border: 2px dashed #5ba77a;
+    margin: 20px 0; border: 2px dashed #008992;
 }
 .qr-mock {
     width: 150px; height: 150px; background: #fff;
-    border: 8px solid #2c4234; display: flex; align-items: center; justify-content: center;
+    border: 8px solid #173f4e; display: flex; align-items: center; justify-content: center;
 }
 .qr-text { font-weight: bold; font-size: 18px; color: #333; word-break: break-all; }
 
 .btn-secondary {
-    padding: 8px 16px; background-color: #8fa898; color: white;
+    padding: 8px 16px; background-color: #666; color: white;
     border: none; border-radius: 4px; cursor: pointer;
 }
 </style>

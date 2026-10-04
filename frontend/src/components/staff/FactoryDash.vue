@@ -1,7 +1,8 @@
 <!-- Factory Dashboard Component -->
 <template>
     <div class="card dashboard-card">
-        <h2>【工場管理者】ダッシュボード</h2>
+        <h2>工場：平準化ダッシュボード</h2>
+        <p calss="desc">固定需要を土台に、柔軟需要を「空き時間」に自動で差し込みます。</p>
 
         <!-- ローディング状態 -->
         <div v-if="loading" class="loading-spinner">
@@ -15,28 +16,47 @@
 
         <!-- データ表示 -->
         <div v-else-if="schedule" class="dashboard-content">
-            <div class="status-badge" :class="schedule.status">
-                システム状態: {{ schedule.status === 'stable' ? '安定' : '警告' }}
-            </div>
-
             <div class="stats-grid">
                 <div class="stat-box primary">
-                    <span class="stat-label">現在のベースロード</span>
+                    <span class="stat-label">B2B 固定需要</span>
                     <span class="stat-value">{{ schedule.base_load }}<small>枠</small></span>
                 </div>
+                <div class="stat-box info">
+                    <span class="stat-label">B2C 柔軟需要</span>
+                    <span class="stat-value">{{ schedule.b2c_pending }}<small>件</small></span>
+                </div>
                 <div class="stat-box success">
-                    <span class="stat-label">個人充当可能スロット</span>
+                    <span class="stat-label">空き枠</span>
                     <span class="stat-value">{{ schedule.available_slots }}<small>枠</small></span>
                 </div>
-                <div class="stat-box warning">
-                    <span class="stat-label">待機中の個人案件</span>
-                    <span class="stat-value">{{ schedule.b2c_pending }}<small>件</small></span>
+            </div>
+
+            <div class="tetris-chart">
+                <h3 class="chart-title">テトリス型・平準化エンジン</h3>
+
+                <div class="chart-container">
+                    <div v-for="(slot, index) in schedule.hourly_schedule" :key="index" class="bar-group">
+                        <div class="bar-wrapper">
+                            <div class="bar b2c-bar"
+                                :style="{ height: (slot.b2c_load / slot_capacity * 100) + '%' }"
+                                :title="'B2C: ' + slot.b2c_load">
+                            </div>
+                            <div class="bar b2b-bar"
+                                :style="{ height: (slot.b2b_load / slot_capacity * 100) + '%' }"
+                                :title="'B2B: ' + slot.b2b_load">
+                            </div>
+                        </div>
+                        <div class="time-label">{{ slot.time.split(':')[0] }}</div>
+                    </div>
+                </div>
+                <div class="legend">
+                    <span class="legend-item"><span class="color-box b2b-box"></span>B2B 固定需要</span>
+                    <span class="legend-item"><span class="color-box b2c-box"></span>B2C おまかせ保管 柔軟需要</span>
                 </div>
             </div>
         </div>
-
         <button class="btn-refresh" @click="loadSchedule" :disabled="loading">
-            稼働率を再計算
+            最新の稼働状況を取得
         </button>
     </div>
 </template>
@@ -57,11 +77,10 @@ const loadSchedule = async () => {
         if (res && res.data) {
             schedule.value = res.data;
         } else {
-            throw new Error("データのフォーマットが不正です");
+            schedule.value = res;
         }
     } catch (err) {
         error.value = "スケジュールの取得に失敗しました。";
-        console.error(err);
     } finally {
         loading.value = false;
     }
@@ -72,40 +91,49 @@ onMounted(loadSchedule);
 
 <style scoped>
 .dashboard-card {
-    background: #ffffff; border-radius: 12px; padding: 24px;
-    box-shadow: 0 4px 20px rgba(91, 167, 122, 0.08);
+    background: #ffffff; border-radius: 20px; padding: 30px;
+    box-shadow: 0 8px 30px rgba(17, 43, 56, 0.1);
+    border: 12px solid #113643;
+    max-width: 600px;
 }
-.loading-spinner { text-align: center; color: #5ba77a; padding: 20px 0; font-weight: bold; }
-.error-msg { color: #dc3545; background: #f8d7da; padding: 12px; border-radius: 8px; text-align: center; }
+.desc { color: #666; font-size: 14px; margin-bottom: 20px; }
 
-.status-badge {
-    display: inline-block; padding: 6px 12px; border-radius: 20px;
-    font-weight: bold; font-size: 0.9em; margin-bottom: 20px;
-}
-.status-badge.stable { background: #eaf5ee; color: #2c4234; border: 1px solid #c9d8ce; }
-.status-badge.warning { background: #fff3cd; color: #856404; }
-
-.stats-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 16px; margin-bottom: 24px;
-}
-
+/* 概要パネル */
+.stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 30px; }
 .stat-box {
-    padding: 16px; border-radius: 8px; display: flex; flex-direction: column;
-    align-items: center; border: 1px solid #e0e8e3; background: #f9fbf9;
+    background: #f4f7f6; padding: 15px; border-radius: 8px; text-align: center;
 }
-.stat-box.primary { border-left: 4px solid #5ba77a; }
-.stat-box.info { border-left: 4px solid #17a2b8; }
-.stat-box.warning { border-left: 4px solid #ffc107; }
+.stat-label { display: block; font-size: 12px; color: #555; margin-bottom: 5px; font-weight: bold; }
+.stat-value { font-size: 20px; font-weight: bold; color: #113643; }
 
-.stat-label { font-size: 0.85em; color: #66786d; margin-bottom: 8px; font-weight: bold; }
-.stat-value { font-size: 1.8em; font-weight: bold; color: #2c4234; }
-.stat-value small { font-size: 0.5em; color: #8fa898; }
+/* テトリス型グラフ */
+.tetris-chart { margin-top: 20px; padding: 20px; background: #fff; }
+.chart-title { font-size: 18px; color: #113643; margin-bottom: 20px; text-align: center;}
+.chart-container {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    height: 150px; border-bottom: 1px solid #ddd; padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+.bar-group { display: flex; flex-direction: column; align-items: center; width: 8%; }
+.bar-wrapper {
+    width: 100%; height: 130px; display: flex; flex-direction: column; justify-content: flex-end;
+}
+.bar { width: 100%; transition: height 0.5s ease-in-out; border-radius: 2px; }
+.b2c-bar { background-color: #008992; margin-bottom: 2px; }
+.b2b-bar { background-color: #173f4e; }
+
+.time-label { margin-top: 5px; font-size: 12px; color: #888; }
+
+/* 凡例 */
+.legend { display: flex; justify-content: center; gap: 20px; font-size: 12px; color: #555; }
+.legend-item { display: flex; align-items: center; gap: 5px; }
+.color-box { width: 12px; height: 12px; border-radius: 2px; }
+.b2b-box { background-color: #173f4e; }
+.b2c-box { background-color: #008992; }
 
 .btn-refresh {
-    width: 100%; padding: 12px; background: #5ba77a; color: white;
+    width: 100%; padding: 15px; background: #007a82; color: white; margin-top: 20px;
     border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: background 0.2s;
 }
-.btn-refresh:hover:not(:disabled) { background: #4a8e65; }
-.btn-refresh:disabled { background: #a8d1b8; cursor: not-allowed; }
+.btn-refresh:hover:not(:disabled) { background: #005f66; }
 </style>

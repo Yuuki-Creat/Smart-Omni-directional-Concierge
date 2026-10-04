@@ -1,7 +1,7 @@
 <!-- Store Reception Component -->
 <template>
     <div class="card store-card">
-        <h2>【店舗スタッフ】スマート受付</h2>
+        <h2>スマート受付 🙍</h2>
         <p class="description">お客様の受付QRコード（番号）を入力してください。</p>
 
         <form @submit.prevent="handleReception" class="reception-form">
