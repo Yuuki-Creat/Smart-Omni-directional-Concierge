@@ -38,11 +38,11 @@
                     <div v-for="(slot, index) in schedule.hourly_schedule" :key="index" class="bar-group">
                         <div class="bar-wrapper">
                             <div class="bar b2c-bar"
-                                :style="{ height: (slot.b2c_load / slot_capacity * 100) + '%' }"
+                                :style="{ height: (slot.b2c_load / slot.capacity * 100) + '%' }"
                                 :title="'B2C: ' + slot.b2c_load">
                             </div>
                             <div class="bar b2b-bar"
-                                :style="{ height: (slot.b2b_load / slot_capacity * 100) + '%' }"
+                                :style="{ height: (slot.b2b_load / slot.capacity * 100) + '%' }"
                                 :title="'B2B: ' + slot.b2b_load">
                             </div>
                         </div>
