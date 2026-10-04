@@ -1,7 +1,7 @@
 <!-- Corporate Status Check UI -->
 <template>
     <div class="card corporate-card">
-        <h2>【法人のお客様】ステータス確認</h2>
+        <h2>法人のお客様：ステータス確認</h2>
         <p class="corp-id-label">法人ID: <strong>{{ currentCorpId }}</strong></p>
 
         <!-- 状態に応じた画面の出し分け -->
@@ -60,9 +60,23 @@ onMounted(loadStatus);
 
 <style scoped>
 .corporate-card {
-    background: #ffffff; border-radius: 12px; padding: 24px;
-    box-shadow: 0 4px 15px rgba(91, 167, 122, 0.08);
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 24px;
+    border: 12px solid #173f4e;
+    max-width: 400px;
+    margin: 0 auto;
 }
+
+.corporate-card h2 {
+    font-size: 18px;
+    color: #173f4e;
+    margin-bottom: 20px;
+    border-bottom: 2px dotted #008992;
+    padding-bottom: 10px;
+    display: inline-block;
+}
+
 .corp-id-label {
     color: #666; font-size: 14px; margin-bottom: 20px;
     border-bottom: 1px solid #e0e8e3; padding-bottom: 10px;
@@ -85,10 +99,18 @@ onMounted(loadStatus);
 .box-value.date { color: #5ba77a; }
 
 .btn-refresh {
-    width: 100%; padding: 12px; background-color: #f4f8f5; color: #333;
-    border: 1px solid #c9d8ce; border-radius: 8px; font-weight: bold;
-    cursor: pointer; transition: all 0.2s;
+    width: 100%; 
+    padding: 12px;
+    margin-top: 10px;
+    background-color: #008992;
+    color: white; 
+    border: none; 
+    border-radius: 8px;
+    font-size: 16px; 
+    font-weight: bold; 
+    cursor: pointer; 
+    transition: background-color 0.3s;
 }
-.btn-refresh:hover:not(:disabled) { background-color: #e0eee4; }
+.btn-refresh:hover:not(:disabled) { background-color: #006f77; }
 .btn-refresh:disabled { opacity: 0.6; cursor: not-allowed; }
 </style>
