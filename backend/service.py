@@ -6,7 +6,7 @@ import uuid
 
 # 工場の1日のスケジュール（時間枠）を生成・取得
 def get_daily_schedule(db):
-    if "houly_schedule" not in db:
+    if "hourly_schedule" not in db:
         schedule = []
         for hour in range(9, 21):
             b2b_load = random.randint(30, 70)
@@ -17,8 +17,8 @@ def get_daily_schedule(db):
                 "b2c_load": 0,
                 "b2c_items": []
             })
-        db["houly_schedule"] = schedule
-    return db["houly_schedule"]
+        db["hourly_schedule"] = schedule
+    return db["hourly_schedule"]
 
 # 個人向け(B2C)処理
 def process_individual_checkin(req_data):
