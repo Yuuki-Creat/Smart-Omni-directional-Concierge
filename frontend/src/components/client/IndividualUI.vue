@@ -67,6 +67,7 @@
             <!-- QRコード風の見た目 -->
             <div class="qr-mock-container">
                 <div class="qr-mock">
+                    <!-- サーバーから取得した受付番号を表示 -->
                     <span class="qr-text">{{ ticketId }}</span>
                 </div>
             </div>
@@ -78,7 +79,7 @@
 
 <script setup>
 import { ref, reactive } from 'vue';
-import { submitIndividualCheckin } from '../../api/apiClient';
+import { submitIndividualCheckin } from '../../api/apiClient'; // API通信関数をインポート
 
 // 入力データを入れる箱（リアクティブ＝画面と連動する変数）
 const form = reactive({
@@ -130,7 +131,9 @@ const resetForm = () => {
 };
 </script>
 
+<!-- 個人受付UIのカードデザイン -->
 <style scoped>
+/* カード全体デザイン */
 .individual-card {
     background: #ffffff;
     border-radius: 24px;
@@ -140,6 +143,7 @@ const resetForm = () => {
     margin: 0 auto;
 }
 
+/* タイトルの設定 */
 .individual-card h2 {
     font-size: 18px;
     color: #173f4e;
@@ -149,12 +153,14 @@ const resetForm = () => {
     display: inline-block;
 }
 
+/* フォーム全体の間隔設定 */
 .karte-form {
     display: flex;
     flex-direction: column;
     gap: 15px; /* 項目間の余白 */
 }
 
+/* 入力項目の文字設定 */
 .form-group { text-align: left; }
 .form-group label { 
     display: block; 
@@ -163,6 +169,7 @@ const resetForm = () => {
     margin-bottom: 6px; 
 }
 
+/* テキストやセレクトボックスの共通デザイン */
 .form-input {
     width: 100%; 
     padding: 14px; 
@@ -174,10 +181,12 @@ const resetForm = () => {
     outline: none; 
     box-sizing: border-box;
 }
+/* フォーカス時のデザイン */
 .form-input:focus {
     box-shadow: 0 0 0 2px #008992;
 }
 
+/* 数値入力欄のデザイン */
 .number-input-group {
     display: flex;
     align-items: center;
@@ -191,6 +200,7 @@ const resetForm = () => {
     color: #333;
 }
 
+/* 送信ボタンのデザイン */
 .btn-submit {
     width: 100%; 
     padding: 16px;
@@ -207,6 +217,7 @@ const resetForm = () => {
 .btn-submit:hover:not(:disabled) { background-color: #006f77; }
 .btn-submit:disabled { opacity: 0.7; cursor: not-allowed; }
 
+/* エラーメッセージのデザイン */
 .error-msg {
     color: #d9534f; background-color: #f2dede;
     padding: 10px; border-radius: 4px; font-size: 14px;
@@ -225,6 +236,7 @@ const resetForm = () => {
 }
 .qr-text { font-weight: bold; font-size: 18px; color: #333; word-break: break-all; }
 
+/* 最初に戻るボタン */
 .btn-secondary {
     padding: 8px 16px; background-color: #666; color: white;
     border: none; border-radius: 4px; cursor: pointer;

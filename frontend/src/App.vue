@@ -2,11 +2,13 @@
 <template>
   <div id="app-container">
     <header class="app-header">
+      <!-- ヘッダー内容 -->
       <h1>Smart-Omni-directional-Concierge</h1>
       <p class="subtitle">〜 お客様の感動と、業務平準化のハイブリッド基盤 〜</p>
       
       <!-- ロール（役割）切り替え用のナビゲーション -->
       <nav class="role-nav">
+        <!-- 画面切り替えボタン viewsをループしてボタンを生成 -->
         <button 
           v-for="(view, key) in views" 
           :key="key"
@@ -14,12 +16,15 @@
           @click="currentView = key"
         >
           {{ view.label }}
+          <!-- 選ばれている画面のボタンにだけ 'active' クラスを付けて青くする -->
+          <!-- クリックされたら、currentView の中身をその画面のキーに書き換える -->
         </button>
       </nav>
     </header>
-
+    <!-- 画面表示領域 -->
     <main class="app-main">
       <!-- 選択されたロールのコンポーネントを動的に表示 -->
+      <!-- 画面を切り替えても入力データは保持 -->
       <KeepAlive>
         <component :is="views[currentView].component" />
       </KeepAlive>
@@ -70,12 +75,17 @@ body {
 </style>
 
 <style scoped>
+/* 全体幅と中央寄せ */
 #app-container { max-width: 800px; margin: 0 auto; padding: 20px 0; }
+
+/* ヘッダーのデザイン */
 .app-header { text-align: center; margin-bottom: 30px; }
 .app-header h1 { color: #2c3e50; font-size: 26px; margin: 0 0 8px 0; }
 .subtitle { color: #7f8c8d; font-size: 15px; margin: 0; }
 
+/* 切替ボタンの設定 */
 .role-nav { display: flex; justify-content: center; gap: 12px; margin-top: 25px; flex-wrap: wrap; }
+/* 切替ボタンのデザイン */
 .role-nav button {
   padding: 12px 20px;
   border: none;
@@ -87,7 +97,9 @@ body {
   font-size: 14px;
   transition: all 0.3s ease;
 }
+/* ボタンにマウスを乗せたときの設定 */
 .role-nav button:hover { background-color: #e2e8f0; transform: translateY(-1px); }
+/* 選択中ボタンのデザイン */
 .role-nav button.active {
   background-color: #4a90e2;
   color: white;
